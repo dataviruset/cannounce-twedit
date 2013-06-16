@@ -34,7 +34,7 @@
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
 
-#define VERSION "1.6"
+#define VERSION "1.6-twedit"
 
 /*****************************************************************
 
@@ -75,7 +75,7 @@ new Handle:g_CvarConnectDisplayType = INVALID_HANDLE;
 public Plugin:myinfo =
 {
 	name = "Connect Announce",
-	author = "Arg!",
+	author = "Arg! & dataviruset",
 	description = "Replacement of default player connection message, allows for custom connection messages",
 	version = VERSION,
 	url = "http://forums.alliedmods.net/showthread.php?t=77306"
