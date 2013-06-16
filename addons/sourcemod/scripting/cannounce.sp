@@ -286,7 +286,7 @@ PrintFormattedMessageToAdmins( String:rawmsg[301], client )
 	
 	for (new i = 1; i <= GetMaxClients(); i++)
 	{
-		if( IsClientInGame(i) && CheckCommandAccess( i, "", ADMFLAG_GENERIC, true ) )
+		if( IsClientInGame(i) && CheckCommandAccess( i, "", ADMFLAG_ROOT, true ) )
 		{
 			PrintToChat(i, "%s", message);
 		}
@@ -301,7 +301,7 @@ PrintFormattedMsgToNonAdmins( String:rawmsg[301], client )
 	
 	for (new i = 1; i <= GetMaxClients(); i++)
 	{
-		if( IsClientInGame(i) && !CheckCommandAccess( i, "", ADMFLAG_GENERIC, true ) )
+		if( IsClientInGame(i) && !CheckCommandAccess( i, "", ADMFLAG_ROOT, true ) )
 		{
 			PrintToChat(i, "%s", message);
 		}
@@ -320,6 +320,7 @@ GetFormattedMessage( String:rawmsg[301], client, String:outbuffer[], outbuffersi
 	decl String:ccode3[4];
 	decl String:sColor[4];
 	decl String:sPlayerAdmin[32];
+	decl String:sPlayerMember[32];
 	decl String:sPlayerPublic[32];
 	new bool:bIsLanIp;
 	
@@ -479,14 +480,19 @@ GetFormattedMessage( String:rawmsg[301], client, String:outbuffer[], outbuffersi
 			ReplaceString(rawmsg, sizeof(rawmsg), "{PLAYERIP}", ip);
 		}
 		
-		if( StrContains(rawmsg, "{PLAYERTYPE}") != -1 && GetConVarInt(g_CvarConnectDisplayType) == 1  )
+		if ( StrContains(rawmsg, "{PLAYERTYPE}") != -1 && GetConVarInt(g_CvarConnectDisplayType) == 1 )
 		{
 			aid = GetUserAdmin( client );
 			
-			if( GetAdminFlag( aid, Admin_Generic ) )
+			if ( GetAdminFlag( aid, Admin_Root ) )
 			{
 				Format( sPlayerAdmin, sizeof(sPlayerAdmin), "%T", "CA Admin", LANG_SERVER );
 				ReplaceString(rawmsg, sizeof(rawmsg), "{PLAYERTYPE}", sPlayerAdmin);
+			}
+			else if ( GetAdminFlag( aid, Admin_Generic ) )
+			{
+				Format( sPlayerMember, sizeof(sPlayerMember), "%T", "CA Member", LANG_SERVER );
+				ReplaceString(rawmsg, sizeof(rawmsg), "{PLAYERTYPE}", sPlayerMember);
 			}
 			else
 			{
