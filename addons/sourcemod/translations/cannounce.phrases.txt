@@ -8,6 +8,10 @@
 	{
 		"en"			"Player"
 	}
+	"CA Member"
+	{
+		"en"			"Member"
+	}
 	"LAN City Desc"
 	{
 		"en"			"an IP Address"
